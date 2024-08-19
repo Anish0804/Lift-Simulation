@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        #inputform{
+            margin-top: 15%;
+            align-items: center;
+            background:beige;
+            width:fit-content;
+            align-content: center;
+            margin-left: 30%;
+            text-align: center;
+        }
+       
+    </style>
+    <form id="inputform" action="lift_sim.html" onsubmit="return checkparameters()">
+        <label><h1>Lift Simulation</h1></label>
+        <label><h2>Enter the number of Floors and Number of Lifts below as needed</h2></label>
+        <label for="Nooffloors" > Number Of Floors : </label> <br>
+        <input type="text" id="nooffloors" name="nooffloors"> <br>
+        <label for="nol"  >Number of Lifts : </label> <br>
+        <input type="text" id="nol" name="nol"> <br> <br>
+        <button style="width:100px;height:30px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; background-color: bisque;color:darkcyan;" type="submit">Sumbit</button>
+    </form>
+
+    <script>
+        function checkparameters(){
+         var floors,lifts;
+         floors=parseInt(document.getElementById("nooffloors").value);
+         lifts= parseInt(document.getElementById("nol").value);
+         let isvalid=true;
+         if(floors<=0) {
+            alert("The value of floors should be >=1")
+            isvalid=false;
+         }
+         if(lifts<=0) {
+            alert("The value of lifts should be >=1")
+            isvalid=false;
+        }
+        return isvalid
+        }
+    </script>
+</body>
+</html>
