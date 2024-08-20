@@ -88,7 +88,7 @@ for(var i=Numberof_FLoors;i>=0;i--){
     newdiv.innerHTML=`
         <div class="floorname">Floor ${i}</div>
         <div class="buttons">
-            <button class="downbutton" onclick="assignLiftToFloor(${i})">↓</button>
+            <button class="downbutton" onclick="assignLiftToFloor(${i}),'down'">↓</button>
         </div>
     `
     floors[i]=new Floor(i);
@@ -102,7 +102,7 @@ for(var i=Numberof_FLoors;i>=0;i--){
     newdiv.innerHTML=`
         <div class="floorname">Floor ${i}</div>
         <div class="buttons">
-            <button class="upbutton" onclick="assignLiftToFloor(${i})">↑</button> <br>
+            <button class="upbutton" onclick="assignLiftToFloor(${i}),'up'">↑</button> <br>
            
         </div>
     `
