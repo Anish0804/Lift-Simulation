@@ -156,7 +156,7 @@ function assignLiftToFloor(floorNumber, buttondirection) {
 
     const button = document.querySelector(buttonSelector);
 
-    // Disable the button
+  
     button.disabled = true;
 
    
@@ -164,7 +164,7 @@ function assignLiftToFloor(floorNumber, buttondirection) {
         button.disabled = false;
     }, 2700);
 
-    // Existing logic to handle lift assignment
+   
     console.log("Floor number is : " + floorNumber);
     let AvailableLift = lifts.find(lift => 
       lift.currentFloor === floorNumber && lift.direction === buttondirection
