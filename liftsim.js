@@ -18,8 +18,29 @@ class Floor {
       this.currentFloor = null; 
       this.direction=null;
       this.element = liftElement;
+      this.queue = [];  
+      this.moving = false;
     }
-    moveToFloor(assignedLift,floorNumber) {
+
+    enqueueRequest(floorNumber, duration) {
+      this.queue.push({ floorNumber, duration });
+      if (!this.moving) {
+          this.processNextRequest();
+      }
+  }
+
+  processNextRequest() {
+      if (this.queue.length === 0) {
+          this.moving = false;
+          return;
+      }
+
+      this.moving = true;
+      const { floorNumber, duration } = this.queue.shift();
+      this.moveToFloor(floorNumber, duration);
+  }
+
+    moveToFloor(assignedLift,floorNumber,duration) {
       console.log("Move to floor assigned lift is : " + assignedLift);
        console.log("Assigned lift floor " + assignedLift.currentFloor);
        const liftElement = assignedLift.element;
@@ -28,15 +49,24 @@ class Floor {
        const floorElement = document.querySelector('.subelements'); 
        const floorHeight = floorElement.clientHeight; 
        const floorMargin = parseInt(window.getComputedStyle(floorElement).marginBottom); 
-      
+       
        const totalFloorHeight = floorHeight + floorMargin;
        const transformVal = floorNumber * totalFloorHeight; 
       
-       liftElement.style.transform = `translateY(-${transformVal}px)`; 
+       
+
+       liftElement.style.transition = `transform ${duration}s ease-in-out`;
+       liftElement.style.transform = `translateY(-${transformVal}px)`;
+   
+       setTimeout(() => {
+           assignedLift.currentFloor = floorNumber;
+           assignedLift.openDoors(assignedLift,duration);
+       }, duration * 1000);
       }
     
-    openDoors(assignedLift) {
-        setTimeout(() => {
+    openDoors(assignedLift,duration) {
+      console.log("Open doors being called");
+       setTimeout(function(){
           console.log("Assigned lift is : "+assignedLift);
         const liftElement = assignedLift.element;
         console.log("Elemnent value is : "+liftElement);
@@ -50,15 +80,17 @@ class Floor {
     setTimeout(function(){
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
+        this.processNextRequest();
     
     },1500)
-        }, 2600);
+  },duration);
      
     console.log("Checking lift animation working");
       }
 
      opendooranim(assignedLift,floorNumber)
       {
+        console.log("open door anim");
         console.log("Assigned lift is : "+assignedLift);
         const liftElement = assignedLift.element;
         console.log("Elemnent value is : "+liftElement);
@@ -77,7 +109,7 @@ class Floor {
   }  
 const floors = [];
 const lifts = [];
-
+const liftRequestQueue = []
 
 for(var i=Numberof_FLoors;i>=0;i--){
   if(i==Numberof_FLoors)
@@ -145,26 +177,21 @@ for(var i=Numberof_FLoors;i>=0;i--){
 }
 
 console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
-    
+
    // document.getElementById("mainpagediv").appendChild(floor0);
 
-function assignLiftToFloor(floorNumber, buttondirection) {
-   
+   function assignLiftToFloor(floorNumber, buttondirection) {
+    // Identify the button based on the direction (up or down)
     const buttonSelector = buttondirection === 'up'
         ? `.upbutton[onclick*="assignLiftToFloor(${floorNumber},'up')"]`
         : `.downbutton[onclick*="assignLiftToFloor(${floorNumber},'down')"]`;
 
     const button = document.querySelector(buttonSelector);
 
-  
-    button.disabled = true;
+    
+    
 
-   
-    setTimeout(() => {
-        button.disabled = false;
-    }, 2700);
-
-   
+    // Existing logic to handle lift assignment
     console.log("Floor number is : " + floorNumber);
     let AvailableLift = lifts.find(lift => 
       lift.currentFloor === floorNumber && lift.direction === buttondirection
@@ -180,11 +207,21 @@ function assignLiftToFloor(floorNumber, buttondirection) {
         
         if (availableLift) {
             console.log("Inside the available lift if part");
+            const currentFloor = availableLift.currentFloor || 0;
+            const floorDifference = Math.abs(currentFloor - floorNumber);
+            const duration = floorDifference * 2;
             availableLift.currentFloor = floorNumber;
             availableLift.direction = buttondirection;
+           
             floors[floorNumber].lift = availableLift;
             console.log("Floor number lift is : " + floors[floorNumber].floorNumber);
-            openliftdoor(floorNumber);
+            button.disabled = true;
+
+   
+            setTimeout(() => {
+                button.disabled = false;
+            },duration*1000);
+            openliftdoor(floorNumber,duration);
         } else {
             console.log("Inside the else part of link door with lift");
             let nearestLiftDistance = Infinity;
@@ -202,24 +239,37 @@ function assignLiftToFloor(floorNumber, buttondirection) {
 
             if (nearestLift) {
                 availableLift = nearestLift; 
-                availableLift.currentFloor = floorNumber;
-                floors[floorNumber].lift = availableLift;
-                openliftdoor(floorNumber);
+                const currentFloor = availableLift.currentFloor || 0;
+                const floorDifference = Math.abs(currentFloor - floorNumber);
+                const duration = floorDifference * 2;
+                
+                
+                setTimeout(() => {
+                  availableLift.enqueueRequest(floorNumber, duration);
+                  
+              }, duration);
+                button.disabled = true;
+
+   
+                setTimeout(() => {
+                    button.disabled = false;
+                },duration*1000);
+                openliftdoor(floorNumber,duration);
             }
         }
     }
 }
-function openliftdoor(floorNumber){
-    
+function openliftdoor(floorNumber,duration){
+    console.log("open lift door being called");
     const assignedLift = floors[floorNumber].lift; 
     console.log(floors)
     console.log(lifts)
     console.log("Assigned lift is :"+assignedLift);
     console.log("Assigned lift element in openliftdoor function is : "+assignedLift.element);
     if (assignedLift) {
-    assignedLift.moveToFloor(assignedLift,floorNumber);
-    assignedLift.openDoors(assignedLift); 
-  } else {
+      assignedLift.moveToFloor(assignedLift,floorNumber,duration);
+    }
+   else {
     console.log("No lift assigned to floor", floorNumber);
   }
    
