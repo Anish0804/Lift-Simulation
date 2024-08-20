@@ -16,6 +16,7 @@ class Floor {
     constructor(liftId,liftElement) {
       this.liftId = liftId;
       this.currentFloor = null; 
+      this.direction=null;
       this.element = liftElement;
     }
     moveToFloor(assignedLift,floorNumber) {
@@ -64,7 +65,6 @@ class Floor {
         console.log("Lift floor in openDoors is : "+assignedLift.currentFloor);
     const leftDoor = liftElement.querySelector('.lift-door-left');
     const rightDoor = liftElement.querySelector('.lift-door-right');
-  
     leftDoor.style.transform = 'translateX(-100%)';
     rightDoor.style.transform = 'translateX(100%)';
 
@@ -130,8 +130,8 @@ for(var i=Numberof_FLoors;i>=0;i--){
     newdiv.innerHTML=`
         <div class="floorname">Floor ${i}</div>
         <div class="buttons">
-            <button class="upbutton" onclick="assignLiftToFloor(${i})">↑</button> <br>
-            <button class="downbutton" onclick="assignLiftToFloor(${i})">↓</button>
+            <button class="upbutton" onclick="assignLiftToFloor(${i},'up')">↑</button> <br>
+            <button class="downbutton" onclick="assignLiftToFloor(${i},'down')">↓</button>
         </div>
     `
       
@@ -144,18 +144,23 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
     
    // document.getElementById("mainpagediv").appendChild(floor0);
 
-function assignLiftToFloor(floorNumber) {
+function assignLiftToFloor(floorNumber,buttondirection) {
     console.log("Floor number is : "+floorNumber);
-    
-    if(availableLift=lifts.find(lift=>lift.currentFloor===floorNumber))
-    {
-      opendoorsonly(floorNumber)
+    let AvailableLift = lifts.find(lift => 
+      lift.currentFloor === floorNumber && lift.direction === buttondirection
+  );
+    if(AvailableLift)
+    {console.log("inside the lift open door animation only")
+      console.log("Lift direction is : "+AvailableLift.direction);
+      console.log("Button direction is : "+buttondirection);
+      opendoorsonly(floorNumber,buttondirection)
     }
     else {
       var availableLift = lifts.find(lift => lift.currentFloor === null)
     if (availableLift) {
+      console.log("Inside the available lift if part");
       availableLift.currentFloor = floorNumber;
-      
+      availableLift.direction=buttondirection;
       floors[floorNumber].lift = availableLift;
       console.log( "Floor number lift is : "+floors[floorNumber].floorNumber)
       openliftdoor(floorNumber) 
@@ -178,6 +183,7 @@ function assignLiftToFloor(floorNumber) {
       if (nearestLift) {
         availableLift = nearestLift; 
         availableLift.currentFloor = floorNumber;
+       // availableLift.direction=buttondirection;
         floors[floorNumber].lift = availableLift;
         openliftdoor(floorNumber);
       }
@@ -195,25 +201,14 @@ function openliftdoor(floorNumber){
     console.log("Assigned lift element in openliftdoor function is : "+assignedLift.element);
     if (assignedLift) {
     assignedLift.moveToFloor(assignedLift,floorNumber);
-    assignedLift.openDoors(assignedLift); // Call the openDoors method of the lift object
+    assignedLift.openDoors(assignedLift); 
   } else {
     console.log("No lift assigned to floor", floorNumber);
   }
-    /*const leftDoor = document.querySelector('.lift-door-left');
-    const rightDoor = document.querySelector('.lift-door-right');
-  
-    leftDoor.style.transform = 'translateX(-100%)';
-    rightDoor.style.transform = 'translateX(100%)';
-
-    setTimeout(function(){
-        leftDoor.style.transform = 'translateX(0%)';
-        rightDoor.style.transform = 'translateX(0%)';
-    
-    },1500)
-    console.log("Checking lift animation working");*/
+   
 }
 
-function opendoorsonly(floorNumber)
+function opendoorsonly(floorNumber,buttondirection)
 {
   const assignedLift = floors[floorNumber].lift;
   if (assignedLift) {
