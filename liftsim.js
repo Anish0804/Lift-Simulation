@@ -17,30 +17,14 @@ class Floor {
       this.liftId = liftId;
       this.currentFloor = null; 
       this.direction=null;
-      this.element = liftElement;
-      this.queue = [];  
+      this.element = liftElement; 
       this.moving = false;
     }
 
-    enqueueRequest(floorNumber, duration) {
-      this.queue.push({ floorNumber, duration });
-      if (!this.moving) {
-          this.processNextRequest();
-      }
-  }
-
-  processNextRequest() {
-      if (this.queue.length === 0) {
-          this.moving = false;
-          return;
-      }
-
-      this.moving = true;
-      const { floorNumber, duration } = this.queue.shift();
-      this.moveToFloor(floorNumber, duration);
-  }
+    
 
     moveToFloor(assignedLift,floorNumber,duration) {
+      assignedLift.moving=true;
       console.log("Move to floor assigned lift is : " + assignedLift);
        console.log("Assigned lift floor " + assignedLift.currentFloor);
        const liftElement = assignedLift.element;
@@ -80,7 +64,7 @@ class Floor {
     setTimeout(function(){
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
-        this.processNextRequest();
+        assignedLift.moving=false;
     
     },1500)
   },duration);
@@ -109,7 +93,7 @@ class Floor {
   }  
 const floors = [];
 const lifts = [];
-const liftRequestQueue = []
+
 
 for(var i=Numberof_FLoors;i>=0;i--){
   if(i==Numberof_FLoors)
@@ -228,7 +212,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
             let nearestLift;
 
             for (const lift of lifts) {
-                if (lift.currentFloor !== null) {
+                if (lift.currentFloor !== null && lift.moving===false) {
                     const distance = Math.abs(lift.currentFloor - floorNumber);
                     if (distance < nearestLiftDistance) {
                         nearestLiftDistance = distance;
@@ -242,12 +226,9 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                 const currentFloor = availableLift.currentFloor || 0;
                 const floorDifference = Math.abs(currentFloor - floorNumber);
                 const duration = floorDifference * 2;
-                
-                
-                setTimeout(() => {
-                  availableLift.enqueueRequest(floorNumber, duration);
-                  
-              }, duration);
+                availableLift.currentFloor = floorNumber;
+                floors[floorNumber].lift = availableLift;
+               
                 button.disabled = true;
 
    
