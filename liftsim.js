@@ -162,10 +162,10 @@ for(var i=Numberof_FLoors;i>=0;i--){
 
 console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
 
-   // document.getElementById("mainpagediv").appendChild(floor0);
+ 
 
    function assignLiftToFloor(floorNumber, buttondirection) {
-    // Identify the button based on the direction (up or down)
+ 
     const buttonSelector = buttondirection === 'up'
         ? `.upbutton[onclick*="assignLiftToFloor(${floorNumber},'up')"]`
         : `.downbutton[onclick*="assignLiftToFloor(${floorNumber},'down')"]`;
@@ -175,7 +175,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
     
     
 
-    // Existing logic to handle lift assignment
+  
     console.log("Floor number is : " + floorNumber);
     let AvailableLift = lifts.find(lift => 
       lift.currentFloor === floorNumber && lift.direction === buttondirection
