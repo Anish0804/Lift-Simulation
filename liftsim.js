@@ -104,7 +104,7 @@ for(var i=Numberof_FLoors;i>=0;i--){
     newdiv.innerHTML=`
         <div class="floorname">Floor ${i}</div>
         <div class="buttons">
-            <button class="downbutton" onclick="assignLiftToFloor(${i}),'down'">↓</button>
+            <button class="downbutton" onclick="assignLiftToFloor(${i},'down')">↓</button>
         </div>
     `
     floors[i]=new Floor(i);
@@ -119,7 +119,7 @@ for(var i=Numberof_FLoors;i>=0;i--){
     newdiv.innerHTML=`
         <div class="floorname floor0">Floor ${i}</div>
         <div class="buttons">
-            <button class="upbutton" onclick="assignLiftToFloor(${i}),'up'">↑</button> <br>
+            <button class="upbutton" onclick="assignLiftToFloor(${i},'up')">↑</button> <br>
            
         </div>
     `
@@ -165,14 +165,17 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
  
 
    function assignLiftToFloor(floorNumber, buttondirection) {
- 
-    const buttonSelector = buttondirection === 'up'
-        ? `.upbutton[onclick*="assignLiftToFloor(${floorNumber},'up')"]`
-        : `.downbutton[onclick*="assignLiftToFloor(${floorNumber},'down')"]`;
+    let buttonSelector;
+    console.log("Button direction inside is : "+buttondirection)
+    if (buttondirection === 'up') {
+      buttonSelector = `.upbutton[onclick*="assignLiftToFloor(${floorNumber},'up')"]`;
+  } else if (buttondirection === 'down') {
+      buttonSelector = `.downbutton[onclick*="assignLiftToFloor(${floorNumber},'down')"]`;
+  }
 
     const button = document.querySelector(buttonSelector);
 
-    
+    console.log("Button is : "+button);
     
 
   
