@@ -65,7 +65,10 @@ class Floor {
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
         assignedLift.moving=false;
-    
+        if (RequestQueue.length > 0) {
+          const nextRequest = RequestQueue.shift();
+          setTimeout(()=>{assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);},1000)
+        }
     },1500)
   },duration);
      
@@ -93,7 +96,7 @@ class Floor {
   }  
 const floors = [];
 const lifts = [];
-
+const RequestQueue=[];
 
 for(var i=Numberof_FLoors;i>=0;i--){
   if(i==Numberof_FLoors)
@@ -222,6 +225,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                         nearestLift = lift;
                     }
                 }
+                
             }
 
             if (nearestLift) {
@@ -239,6 +243,9 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                     button.disabled = false;
                 },duration*1000);
                 openliftdoor(floorNumber,duration);
+            }
+            else{
+              RequestQueue.push({floorNumber,buttondirection});
             }
         }
     }
