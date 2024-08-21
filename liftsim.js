@@ -57,10 +57,11 @@ class Floor {
         console.log("Lift floor in openDoors is : "+assignedLift.currentFloor);
     const leftDoor = liftElement.querySelector('.lift-door-left');
     const rightDoor = liftElement.querySelector('.lift-door-right');
-  
+    leftDoor.style.transition = `transform 2.5s linear`;
+    rightDoor.style.transition = `transform 2.5s linear`;
     leftDoor.style.transform = 'translateX(-100%)';
     rightDoor.style.transform = 'translateX(100%)';
-
+   
     setTimeout(function(){
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
@@ -69,7 +70,7 @@ class Floor {
           const nextRequest = RequestQueue.shift();
           setTimeout(()=>{assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);},1000)
         }
-    },1500)
+    },2600)
   },duration);
      
     console.log("Checking lift animation working");
@@ -84,6 +85,8 @@ class Floor {
         console.log("Lift floor in openDoors is : "+assignedLift.currentFloor);
     const leftDoor = liftElement.querySelector('.lift-door-left');
     const rightDoor = liftElement.querySelector('.lift-door-right');
+    leftDoor.style.transition = `transform 2.5s linear`;
+    rightDoor.style.transition = `transform 2.5s linear`;
     leftDoor.style.transform = 'translateX(-100%)';
     rightDoor.style.transform = 'translateX(100%)';
 
@@ -91,7 +94,7 @@ class Floor {
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
     
-    },1500)
+    },2600)
       }
   }  
 const floors = [];
