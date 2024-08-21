@@ -245,6 +245,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                 openliftdoor(floorNumber,duration);
             }
             else{
+              button.disabled=true
               RequestQueue.push({floorNumber,buttondirection});
             }
         }
