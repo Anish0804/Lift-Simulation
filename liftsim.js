@@ -68,7 +68,7 @@ class Floor {
         assignedLift.moving=false;
         if (RequestQueue.length > 0) {
           const nextRequest = RequestQueue.shift();
-          setTimeout(()=>{assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);},1000)
+          setTimeout(()=>{assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);},2600)
         }
     },2600)
   },duration);
