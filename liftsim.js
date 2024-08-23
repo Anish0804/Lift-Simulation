@@ -23,30 +23,31 @@ class Floor {
 
     
 
-    moveToFloor(assignedLift,floorNumber,duration) {
-      assignedLift.moving=true;
+    moveToFloor(assignedLift, floorNumber, duration) {
+      assignedLift.moving = true;
       console.log("Move to floor assigned lift is : " + assignedLift);
-       console.log("Assigned lift floor " + assignedLift.currentFloor);
-       const liftElement = assignedLift.element;
-       
-       const containerHeight = document.getElementById("mainpagediv").clientHeight; 
-       const floorElement = document.querySelector('.subelements'); 
-       const floorHeight = floorElement.clientHeight; 
-       const floorMargin = parseInt(window.getComputedStyle(floorElement).marginBottom); 
-       
-       const totalFloorHeight = floorHeight + floorMargin;
-       const transformVal = floorNumber * totalFloorHeight; 
+      console.log("Assigned lift floor " + assignedLift.currentFloor);
+      const liftElement = assignedLift.element;
       
-       
-
-       liftElement.style.transition = `transform ${duration}s ease-in-out`;
-       liftElement.style.transform = `translateY(-${transformVal}px)`;
-   
-       setTimeout(() => {
-           assignedLift.currentFloor = floorNumber;
-           assignedLift.openDoors(assignedLift,duration);
-       }, duration * 1000);
-      }
+      const mainPageDiv = document.getElementById("mainpagediv");
+      const allFloors = mainPageDiv.querySelectorAll('.subelements');
+      const targetFloor = allFloors[floorNumber]; // Direct access by floor number
+      
+      const liftRect = liftElement.getBoundingClientRect();
+      const targetFloorRect = targetFloor.getBoundingClientRect();
+      const mainPageRect = mainPageDiv.getBoundingClientRect();
+      
+      // Calculate the distance to move
+      const transformVal = targetFloorRect.top - mainPageRect.top;
+  
+      liftElement.style.transition = `transform ${duration}s linear`;
+      liftElement.style.transform = `translateY(-${transformVal}px)`;
+  
+      setTimeout(() => {
+          assignedLift.currentFloor = floorNumber;
+          assignedLift.openDoors(assignedLift, duration);
+      }, duration * 1000);
+  }
     
     openDoors(assignedLift,duration) {
       console.log("Open doors being called");
@@ -279,7 +280,7 @@ function opendoorsonly(floorNumber,buttondirection)
 }
  
 
-function adjustSubelementsWidth() {
+/*function adjustSubelementsWidth() {
   const subelements = document.querySelectorAll('.subelements');
   console.log("Subelements are : ", subelements);
 
@@ -295,4 +296,4 @@ function adjustSubelementsWidth() {
 }
 
 window.onload = adjustSubelementsWidth;
-window.onresize = adjustSubelementsWidth;
+window.onresize = adjustSubelementsWidth;*/
