@@ -3,47 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Document</title>
 </head>
 <body>
     <style>
-        #inputform{
+        #inputform {
             margin-top: 15%;
             align-items: center;
-            background:beige;
-            width:fit-content;
+            background: beige;
+            width: fit-content;
             align-content: center;
             margin-left: 30%;
             text-align: center;
         }
-       
     </style>
     <form id="inputform" action="lift_sim.html" onsubmit="return checkparameters()">
         <label><h1>Lift Simulation</h1></label>
         <label><h2>Enter the number of Floors and Number of Lifts below as needed</h2></label>
-        <label for="Nooffloors" > Number Of Floors : </label> <br>
-        <input type="text" id="nooffloors" name="nooffloors"> <br>
-        <label for="nol"  >Number of Lifts : </label> <br>
-        <input type="text" id="nol" name="nol"> <br> <br>
-        <button style="width:100px;height:30px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; background-color: bisque;color:darkcyan;" type="submit">Sumbit</button>
+        <label for="nooffloors">Number Of Floors:</label><br>
+        <input type="number" id="nooffloors" name="nooffloors" min="1" required><br>
+        <label for="nol">Number of Lifts:</label><br>
+        <input type="number" id="nol" name="nol" min="1" required><br><br>
+        <button style="width:100px;height:30px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; background-color: bisque;color:darkcyan;" type="submit">Submit</button>
     </form>
 
     <script>
-        function checkparameters(){
-         var floors,lifts;
-         floors=parseInt(document.getElementById("nooffloors").value);
-         lifts= parseInt(document.getElementById("nol").value);
-         let isvalid=true;
-         if(floors<=0) {
-            alert("The value of floors should be >=1")
-            isvalid=false;
-         }
-         if(lifts<=0) {
-            alert("The value of lifts should be >=1")
-            isvalid=false;
-        }
-        return isvalid
+        function checkparameters() {
+            var floors, lifts;
+            floors = document.getElementById("nooffloors").value;
+            lifts = document.getElementById("nol").value;
+            let isvalid = true;
+
+            
+            if (isNaN(floors) || isNaN(lifts)) {
+                alert("Please enter valid numbers only.");
+                isvalid = false;
+            }
+
+            
+            if (floors.trim() === "" || lifts.trim() === "") {
+                alert("Fields cannot be empty or contain spaces.");
+                isvalid = false;
+            }
+
+            return isvalid;
         }
     </script>
 </body>
