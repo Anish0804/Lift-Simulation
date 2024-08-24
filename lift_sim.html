@@ -12,7 +12,7 @@
        body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Hide horizontal overflow on the body */
+    overflow-x: auto; /* Hide horizontal overflow on the body */
    
 }
   #mainpagediv {
@@ -20,7 +20,7 @@
     overflow-x: auto;
     background-color: lightgray;
     min-width: 100%;
-    height: 100%;
+    height: fit-content;
     min-height: 100%;
 }
 
@@ -28,7 +28,8 @@
     display: inline-flex;
     background-color: beige;
     height: 100px;
-    margin-bottom: 2%;
+    margin-bottom: 20px;
+    
     box-sizing: border-box;
     min-width: 100%;
 }
@@ -43,11 +44,11 @@
 .floorname {
     background-color: aquamarine;
     color: blue;
-    width: 5%;
+    width: 8vw;
     min-width: 40px;
     height: 100%;
     font-size: 2vw;
-    margin-right: 1%;
+    margin-right: 1vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +59,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-right: 1%;
+    margin-right: 1vw;
     flex-shrink: 0;
 }
 
@@ -70,7 +71,7 @@
 
 .lift {
     display: inline-flex;
-    margin-left: 1%;
+    margin-left: 1vw;
     background-color: white;
     width: 6vw;
     min-width: 60px;
