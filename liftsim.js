@@ -31,13 +31,13 @@ class Floor {
       
       const mainPageDiv = document.getElementById("mainpagediv");
       const allFloors = mainPageDiv.querySelectorAll('.subelements');
-      const targetFloor = allFloors[floorNumber]; // Direct access by floor number
+      const targetFloor = allFloors[floorNumber]; 
       
       const liftRect = liftElement.getBoundingClientRect();
       const targetFloorRect = targetFloor.getBoundingClientRect();
       const mainPageRect = mainPageDiv.getBoundingClientRect();
       
-      // Calculate the distance to move
+      
       const transformVal = targetFloorRect.top - mainPageRect.top;
   
       liftElement.style.transition = `transform ${duration}s linear`;
@@ -66,12 +66,16 @@ class Floor {
     setTimeout(function(){
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
-        assignedLift.moving=false;
+        setTimeout(()=>{
+          assignedLift.moving=false;
+          console.log("Lift moving is set to false");
         if (RequestQueue.length > 0) {
+          
           const nextRequest = RequestQueue.shift();
-          setTimeout(()=>{assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);},2600)
-        }
+          assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);}},2600)
+        
     },2600)
+    
   },duration);
      
     console.log("Checking lift animation working");
@@ -79,6 +83,7 @@ class Floor {
 
      opendooranim(assignedLift,floorNumber)
       {
+        assignedLift.moving = true;
         console.log("open door anim");
         console.log("Assigned lift is : "+assignedLift);
         const liftElement = assignedLift.element;
@@ -94,6 +99,13 @@ class Floor {
     setTimeout(function(){
         leftDoor.style.transform = 'translateX(0%)';
         rightDoor.style.transform = 'translateX(0%)';
+        setTimeout(()=>{
+          assignedLift.moving=false;
+          console.log("Lift moving is set to false");
+        if (RequestQueue.length > 0) {
+          
+          const nextRequest = RequestQueue.shift();
+          assignLiftToFloor(nextRequest.floorNumber,nextRequest.buttondirection);}},2600)
     
     },2600)
       }
@@ -251,6 +263,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
             else{
               button.disabled=true
               RequestQueue.push({floorNumber,buttondirection});
+              
             }
         }
     }
