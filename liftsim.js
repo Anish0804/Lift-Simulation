@@ -114,8 +114,39 @@ const floors = [];
 const lifts = [];
 const RequestQueue=[];
 
-for(var i=Numberof_FLoors;i>=0;i--){
-  if(i==Numberof_FLoors)
+for(var i=Numberof_FLoors-1;i>=0;i--){
+  if(i==0)
+    {
+      const newdiv=document.createElement("div");
+      
+      newdiv.className=`subelements`;
+      newdiv.innerHTML=`
+          <div class="floorname floor0">Floor ${i}</div>
+          <div class="buttons">
+              <button class="upbutton" onclick="assignLiftToFloor(${i},'up')">↑</button> <br>
+             
+          </div>
+      `
+      for(var j=1;j<=numberof_Lifts;j++)
+        {
+            const liftdiv=document.createElement("div");
+            const liftdoorleft=document.createElement("div");
+            const liftdoorright=document.createElement("div");
+            liftdiv.className="lift";
+            liftdiv.id=`lift${i}`
+            liftdoorleft.className="lift-door-left";
+            liftdoorright.className="lift-door-right";
+            liftdiv.appendChild(liftdoorleft);
+            liftdiv.appendChild(liftdoorright);
+            newdiv.appendChild(liftdiv);
+            lifts.push(new Lift(`lift${i}`,liftdiv));
+        }
+      floors[i]=new Floor(i);
+     
+      document.getElementById("mainpagediv").appendChild(newdiv);
+      
+    }
+  else if(i==Numberof_FLoors-1)
   {
     const newdiv=document.createElement("div");
     
@@ -130,37 +161,7 @@ for(var i=Numberof_FLoors;i>=0;i--){
     
     document.getElementById("mainpagediv").appendChild(newdiv);
   }
-  else if(i==0)
-  {
-    const newdiv=document.createElement("div");
-    
-    newdiv.className=`subelements`;
-    newdiv.innerHTML=`
-        <div class="floorname floor0">Floor ${i}</div>
-        <div class="buttons">
-            <button class="upbutton" onclick="assignLiftToFloor(${i},'up')">↑</button> <br>
-           
-        </div>
-    `
-    for(var j=1;j<=numberof_Lifts;j++)
-      {
-          const liftdiv=document.createElement("div");
-          const liftdoorleft=document.createElement("div");
-          const liftdoorright=document.createElement("div");
-          liftdiv.className="lift";
-          liftdiv.id=`lift${i}`
-          liftdoorleft.className="lift-door-left";
-          liftdoorright.className="lift-door-right";
-          liftdiv.appendChild(liftdoorleft);
-          liftdiv.appendChild(liftdoorright);
-          newdiv.appendChild(liftdiv);
-          lifts.push(new Lift(`lift${i}`,liftdiv));
-      }
-    floors[i]=new Floor(i);
-   
-    document.getElementById("mainpagediv").appendChild(newdiv);
-    
-  }
+ 
   else{
     const newdiv=document.createElement("div");
     
