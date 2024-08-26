@@ -201,8 +201,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
   
     console.log("Floor number is : " + floorNumber);
     let AvailableLift = lifts.find(lift => 
-      lift.currentFloor === floorNumber && lift.direction === buttondirection
-    );
+      lift.currentFloor === floorNumber && lift.direction === buttondirection && lift.moving==false);
     
     if (AvailableLift) {
         console.log("Inside the lift open door animation only");
