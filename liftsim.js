@@ -252,7 +252,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                 const floorDifference = Math.abs(currentFloor - floorNumber);
                 const duration = floorDifference * 2;
                 availableLift.currentFloor = floorNumber;
-                //availableLift.direction = buttondirection;
+                availableLift.direction = buttondirection;
                 floors[floorNumber].lift = availableLift;
                
                 button.disabled = true;
