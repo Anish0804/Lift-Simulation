@@ -207,6 +207,8 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
         console.log("Inside the lift open door animation only");
         console.log("Lift direction is : " + AvailableLift.direction);
         console.log("Button direction is : " + buttondirection);
+        button.disabled=true;
+        setTimeout(()=>{button.disabled=false},5100)
         opendoorsonly(floorNumber, buttondirection);
     } else {
         var availableLift = lifts.find(lift => (lift.currentFloor === null));
@@ -226,7 +228,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
    
             setTimeout(() => {
                 button.disabled = false;
-            },duration*1000);
+            },(duration*1000)+5200);
             openliftdoor(floorNumber,duration);
         } else {
             console.log("Inside the else part of link door with lift");
@@ -250,7 +252,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                 const floorDifference = Math.abs(currentFloor - floorNumber);
                 const duration = floorDifference * 2;
                 availableLift.currentFloor = floorNumber;
-                availableLift.direction = buttondirection;
+                //availableLift.direction = buttondirection;
                 floors[floorNumber].lift = availableLift;
                
                 button.disabled = true;
@@ -258,7 +260,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
    
                 setTimeout(() => {
                     button.disabled = false;
-                },duration*1000);
+                },(duration*1000)+5200);
                 openliftdoor(floorNumber,duration);
             }
             else{
