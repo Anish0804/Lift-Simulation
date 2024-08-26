@@ -201,7 +201,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
   
     console.log("Floor number is : " + floorNumber);
     let AvailableLift = lifts.find(lift => 
-      lift.currentFloor === floorNumber && lift.direction === buttondirection && lift.moving==false);
+      lift.currentFloor === floorNumber && lift.direction === buttondirection);
     
     if (AvailableLift) {
         console.log("Inside the lift open door animation only");
@@ -209,7 +209,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
         console.log("Button direction is : " + buttondirection);
         opendoorsonly(floorNumber, buttondirection);
     } else {
-        var availableLift = lifts.find(lift => lift.currentFloor === null);
+        var availableLift = lifts.find(lift => (lift.currentFloor === null));
         
         if (availableLift) {
             console.log("Inside the available lift if part");
@@ -250,6 +250,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                 const floorDifference = Math.abs(currentFloor - floorNumber);
                 const duration = floorDifference * 2;
                 availableLift.currentFloor = floorNumber;
+                availableLift.direction = buttondirection;
                 floors[floorNumber].lift = availableLift;
                
                 button.disabled = true;
