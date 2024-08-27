@@ -208,8 +208,8 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
         console.log("Lift direction is : " + AvailableLift.direction);
         console.log("Button direction is : " + buttondirection);
         button.disabled=true;
-        setTimeout(()=>{button.disabled=false},5100)
-        opendoorsonly(floorNumber, buttondirection);
+        setTimeout(()=>{button.disabled=false},5200)
+        opendoorsonly(floorNumber, buttondirection,AvailableLift);
     } else {
         var availableLift = lifts.find(lift => (lift.currentFloor === null));
         
@@ -266,6 +266,8 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
             else{
               button.disabled=true
               RequestQueue.push({floorNumber,buttondirection});
+              RequestQueue.sort((a, b) => a.floorNumber - b.floorNumber);
+              console.log("Request Queue is : "+RequestQueue[0].floorNumber)
               
             }
         }
@@ -287,12 +289,14 @@ function openliftdoor(floorNumber,duration){
    
 }
 
-function opendoorsonly(floorNumber,buttondirection)
+function opendoorsonly(floorNumber,buttondirection,availableLift)
 {
-  const assignedLift = floors[floorNumber].lift;
-  if (assignedLift) {
-    assignedLift.opendooranim(assignedLift,floorNumber);
-  }
+  //const assignedLift = floors[floorNumber].lift;
+ // console.log("Assigned lift is : "+assignedLift);
+  //console.log("Available lift is : "+availableLift); 
+ // if (assignedLift) {
+    availableLift.opendooranim(availableLift,floorNumber);
+  //}
 }
  
 
