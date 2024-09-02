@@ -1,6 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const Numberof_FLoors = parseInt(urlParams.get('nooffloors'));
-const numberof_Lifts = parseInt(urlParams.get('nol'));
+const numberof_Lifts = parseInt(urlParams.get('lifts'));
 console.log("Number of lifts : "+numberof_Lifts);
 
 class Floor {
