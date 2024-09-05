@@ -31,17 +31,17 @@
         function checkparameters() {
             var floors, lifts;
             floors = document.getElementById("nooffloors").value;
-            lifts = document.getElementById("nol").value;
+            lifts = document.getElementById("lifts").value;
             let isvalid = true;
 
             
-            if (isNaN(floors) || isNaN(lifts)) {
+            if (isNaN(floors) || isNaN(lifts)|| floors.includes('e') || lifts.includes('e')) {
                 alert("Please enter valid numbers only.");
                 isvalid = false;
             }
 
             
-            if (floors.trim() === "" || lifts.trim() === "") {
+            if (floors.trim() === "" || lifts.trim() === ""|| floors.includes('e') || lifts.includes('e')) {
                 alert("Fields cannot be empty or contain spaces.");
                 isvalid = false;
             }
