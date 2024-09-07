@@ -15,7 +15,7 @@ class Floor {
   class Lift {
     constructor(liftId,liftElement) {
       this.liftId = liftId;
-      this.currentFloor = null; 
+      this.currentFloor = 0; 
       this.direction=null;
       this.element = liftElement; 
       this.moving = false;
@@ -211,27 +211,7 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
         setTimeout(()=>{button.disabled=false},5200)
         opendoorsonly(floorNumber, buttondirection,AvailableLift);
     } else {
-        var availableLift = lifts.find(lift => (lift.currentFloor === null));
-        
-        if (availableLift) {
-            console.log("Inside the available lift if part");
-            const currentFloor = availableLift.currentFloor || 0;
-            const floorDifference = Math.abs(currentFloor - floorNumber);
-            const duration = floorDifference * 2;
-            availableLift.currentFloor = floorNumber;
-            availableLift.direction = buttondirection;
-           
-            floors[floorNumber].lift = availableLift;
-            console.log("Floor number lift is : " + floors[floorNumber].floorNumber);
-            button.disabled = true;
-
-   
-            setTimeout(() => {
-                button.disabled = false;
-            },(duration*1000)+5200);
-            openliftdoor(floorNumber,duration);
-        } else {
-            console.log("Inside the else part of link door with lift");
+      console.log("Inside the else part of link door with lift");
             let nearestLiftDistance = Infinity;
             let nearestLift;
 
@@ -263,6 +243,27 @@ console.log("Floors array val : "+floors[Numberof_FLoors].floorNumber);
                 },(duration*1000)+5200);
                 openliftdoor(floorNumber,duration);
             }
+        else {
+          var availableLift = lifts.find(lift => (lift.currentFloor === 0));
+        
+          if (availableLift) {
+              console.log("Inside the available lift if part");
+              const currentFloor = availableLift.currentFloor || 0;
+              const floorDifference = Math.abs(currentFloor - floorNumber);
+              const duration = floorDifference * 2;
+              availableLift.currentFloor = floorNumber;
+              availableLift.direction = buttondirection;
+             
+              floors[floorNumber].lift = availableLift;
+              console.log("Floor number lift is : " + floors[floorNumber].floorNumber);
+              button.disabled = true;
+  
+     
+              setTimeout(() => {
+                  button.disabled = false;
+              },(duration*1000)+5200);
+              openliftdoor(floorNumber,duration);
+          } 
             else{
               button.disabled=true
               RequestQueue.push({floorNumber,buttondirection});
